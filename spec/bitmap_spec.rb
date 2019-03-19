@@ -134,4 +134,17 @@ RSpec.describe Bitmap do
             end
         end
     end
+
+    context "show" do
+        before do
+            max_row = 3
+            max_cloumn = 4
+            @bitmap = Bitmap.new(max_row, max_cloumn)
+        end
+
+        it "prints the bitmap" do
+            expect { @bitmap.show }.to output("O O O O\nO O O O\nO O O O\n").to_stdout
+        end
+    end
+
 end

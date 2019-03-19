@@ -55,6 +55,12 @@ class Bitmap
         end
     end
 
+    def show
+        @bitmap.each { |row|
+            puts row.each { |ele| ele }.join(" ")
+        }
+    end
+
     private
 
     def validate_row_range(row_1, row_2)
