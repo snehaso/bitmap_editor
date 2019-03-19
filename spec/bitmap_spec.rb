@@ -5,8 +5,8 @@ RSpec.describe Bitmap do
     context "new" do
         it "should create an empty bitmap of zie 3 * 4" do
             bitmap = Bitmap.new(3, 4)
-            expect(bitmap.max_row_length).to equal(3)
-            expect(bitmap.max_column_length).to equal(4)
+            expect(bitmap.max_row_length).to eql(3)
+            expect(bitmap.max_column_length).to eql(4)
         end
 
         it "should not accept max row length less than or equal to zero" do
@@ -48,21 +48,21 @@ RSpec.describe Bitmap do
         end
 
         it "raise argument error if color alphabet is incorrect" do
-            expect { @bitmap.color(1, 1, "#") }.to raise_error(ArgumentError, "Wrong color alphabet. should be A...Z")
+            expect { @bitmap.color_pixel(1, 1, "#") }.to raise_error(ArgumentError, "Wrong color alphabet #. should be A...Z")
         end
 
         it "raise argument error if row co-ordinated are out of range " do
-            expect { @bitmap.color(5, 1, "C") }.to raise_error(ArgumentError, "Wrong row co-ordinate")
+            expect { @bitmap.color_pixel(5, 1, "C") }.to raise_error(ArgumentError, "Wrong row co-ordinate")
         end
 
         it "raise argument error if column co-ordinated are out of range " do
-            expect { @bitmap.color(3, 11, "C") }.to raise_error(ArgumentError, "Wrong column co-ordinate")
+            expect { @bitmap.color_pixel(3, 5, "C") }.to raise_error(ArgumentError, "Wrong column co-ordinate")
         end
 
         it "should color pixel" do
             expect(@bitmap.fetch(1, 1)).to eql(Bitmap::COLORS::WHITE)
 
-            @bitmap.color(1,1,'C')
+            @bitmap.color_pixel(1, 1, 'C')
 
             expect(@bitmap.fetch(1, 1)).to eql('C')
         end
