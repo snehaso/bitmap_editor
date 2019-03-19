@@ -66,5 +66,72 @@ RSpec.describe Bitmap do
 
             expect(@bitmap.fetch(1, 1)).to eql('C')
         end
+
+        context "color segment" do
+            context "color a verticle segment in a column" do
+                context "validations" do
+                    it "validates input columns range" do
+                        expect {
+                            @bitmap.color_verticle_segment(2, 4, 1, 'B')
+                        }.to raise_error(ArgumentError, "Wrong column range")
+
+                        expect {
+                            @bitmap.color_verticle_segment(2, 1, 1, 'B')
+                        }.to raise_error(ArgumentError, "Wrong column range")
+
+                    end
+
+                    it "validates row co-ordinates" do
+                        expect {
+                            @bitmap.color_verticle_segment(5, 1, 2, 'B')
+                        }.to raise_error(ArgumentError, "Wrong row co-ordinate")
+                    end
+                end
+
+                it "should color a verticle segment in a column" do
+                    (1..4).each do |column|
+                        expect(@bitmap.fetch(2, column)).to eql(Bitmap::COLORS::WHITE)
+                    end
+
+                    @bitmap.color_verticle_segment(2, 1, 4, 'B')
+
+                    (1..4).each do |column|
+                        expect(@bitmap.fetch(2, column)).to eql('B')
+                    end
+                end
+            end
+
+            context "color a horizontal segment in a row" do
+                context "validations" do
+                    it "validates input row range" do
+                        expect {
+                            @bitmap.color_horizontal_segment(3, 1, 2, 'B')
+                        }.to raise_error(ArgumentError, "Wrong row range")
+
+                        expect {
+                            @bitmap.color_horizontal_segment(1, 1, 2, 'B')
+                        }.to raise_error(ArgumentError, "Wrong row range")
+                    end
+
+                    it "validates column co-ordinates" do
+                        expect {
+                            @bitmap.color_horizontal_segment(1, 3, 5, 'B')
+                        }.to raise_error(ArgumentError, "Wrong column co-ordinate")
+                    end
+                end
+
+                it "should color a horizontal segment in a row" do
+                    (1..3).each do |row|
+                        expect(@bitmap.fetch(row, 2)).to eql(Bitmap::COLORS::WHITE)
+                    end
+
+                    @bitmap.color_horizontal_segment(1, 3, 2, 'B')
+
+                    (1..3).each do |row|
+                        expect(@bitmap.fetch(row, 2)).to eql('B')
+                    end
+                end
+            end
+        end
     end
 end
